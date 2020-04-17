@@ -15,20 +15,28 @@ router.get("/", function (req, res, next) {
 });
 
 router.post("/", function (req, res, next) {
-  const saltRounds = 4;
   const username = req.body["username"];
   const plaintextPassword = req.body["password"];
-  let hash = '';
   client.connect();
-  sql = "SELECT password FROM users WHERE username ==" + username;
-  client
-    .query(sql)
-    .then((result) => {
-        console.log(result);
-        client.end();
-    })
-    .catch((e) => console.error(e.stack));
+  comfirmPassword(username,plaintextPassword);
 });
 
+async function comfirmPassword(username, password) {
+  const sql = "SELECT password FROM users WHERE username = $1";
+  try {
+    const result = await client.query(sql, [username]);
+    let hash = result.rows[0]["password"];
+    console.log(hash);
+    bcrypt.compare(password, hash).then((isCorrectPassword) => {
+      if (isCorrectPassword) {
+        console.log("Login Success!");
+      } else {
+        console.log("Login failed");
+      }
+    });
+  } catch (err) {
+    console.log(err.stack);
+  }
+}
 
 module.exports = router;
