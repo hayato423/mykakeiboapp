@@ -12,7 +12,8 @@ const client = new Client({
 });
 
 router.get("/", function (req, res, next) {
-  res.render("login", { title: "ログイン" });
+  var msg = "ユーザーネームとパスワードを入力してください";
+  res.render("login", { title: "ログイン", msg : msg });
 });
 
 router.post("/", function (req, res, next) {
@@ -26,6 +27,12 @@ router.post("/", function (req, res, next) {
       req.session.username = username;
       res.redirect('..');
     }
+    else{
+      res.render('login',{
+        title:'ログイン',
+        msg : 'ログインに失敗しました'
+      });
+    }
   });
 });
 
@@ -35,6 +42,7 @@ async function comfirmPassword(username, password) {
     client.connect();
     const sql = "SELECT password FROM users WHERE username = $1";
     const result = await client.query(sql, [username]);
+    client.end();
     let hash = result.rows[0]["password"];
     const isCorrectPassword = await bcrypt.compare(password,hash);
     if(isCorrectPassword) return true;
