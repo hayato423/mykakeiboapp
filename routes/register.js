@@ -16,6 +16,7 @@ router.post("/", function (req, res, next) {
   const saltRounds = 4; //ストレッチング回数
   const username = req.body["username"];
   const plaintextPassword = req.body["password"];
+  //ハッシュ化した文章を代入
   var hash = bcrypt.hashSync(plaintextPassword, saltRounds);
   client.connect();
   sql = "INSERT INTO users (username,password) VALUES($1,$2)";

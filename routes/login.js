@@ -21,6 +21,7 @@ router.post("/", function (req, res, next) {
   comfirmPassword(username,plaintextPassword);
 });
 
+//dbからユーザーネームを基にパスワードを取得し,引数のパスワードと比較.一致するならtrue,しないならfalseを返す.
 async function comfirmPassword(username, password) {
   const sql = "SELECT password FROM users WHERE username = $1";
   try {
