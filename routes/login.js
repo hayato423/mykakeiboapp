@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const { Client } = require("pg");
 
+
 const connectionString =
   process.env.DATABASE_URL ||
   "postgres://postgres:postgres@localhost:5432/mykakeiboapp";
@@ -18,7 +19,7 @@ router.post("/", function (req, res, next) {
   const username = req.body["username"];
   const plaintextPassword = req.body["password"];
   client.connect();
-  comfirmPassword(username,plaintextPassword);
+  const isPasswordMached = comfirmPassword(username,plaintextPassword);
 });
 
 //dbからユーザーネームを基にパスワードを取得し,引数のパスワードと比較.一致するならtrue,しないならfalseを返す.
@@ -31,8 +32,10 @@ async function comfirmPassword(username, password) {
     bcrypt.compare(password, hash).then((isCorrectPassword) => {
       if (isCorrectPassword) {
         console.log("Login Success!");
+        return true;
       } else {
         console.log("Login failed");
+        return false;
       }
     });
   } catch (err) {
