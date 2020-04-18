@@ -18,26 +18,27 @@ router.get("/", function (req, res, next) {
 router.post("/", function (req, res, next) {
   const username = req.body["username"];
   const plaintextPassword = req.body["password"];
-  client.connect();
-  const isPasswordMached = comfirmPassword(username,plaintextPassword);
+  comfirmPassword(username,plaintextPassword).then((isloginSuccess) => {
+    console.log(isloginSuccess);
+    if(isloginSuccess){
+      console.log('login success');
+      req.session.isLogin = true;
+      req.session.username = username;
+      res.redirect('..');
+    }
+  });
 });
 
 //dbからユーザーネームを基にパスワードを取得し,引数のパスワードと比較.一致するならtrue,しないならfalseを返す.
 async function comfirmPassword(username, password) {
-  const sql = "SELECT password FROM users WHERE username = $1";
   try {
+    client.connect();
+    const sql = "SELECT password FROM users WHERE username = $1";
     const result = await client.query(sql, [username]);
     let hash = result.rows[0]["password"];
-    console.log(hash);
-    bcrypt.compare(password, hash).then((isCorrectPassword) => {
-      if (isCorrectPassword) {
-        console.log("Login Success!");
-        return true;
-      } else {
-        console.log("Login failed");
-        return false;
-      }
-    });
+    const isCorrectPassword = await bcrypt.compare(password,hash);
+    if(isCorrectPassword) return true;
+    else return false;
   } catch (err) {
     console.log(err.stack);
   }
