@@ -34,8 +34,10 @@ router.post('/',function(req,res) {
         console.log(result);
         client.end();
     })
-    .catch((e) => console.log(e.stack));
-    res.redirect('..');
+    .catch((e) => console.log(e.stack))
+    .then(() => {
+        res.redirect('..');
+    });
 })
 
 module.exports = router;

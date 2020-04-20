@@ -19,7 +19,7 @@ router.post("/", function (req, res, next) {
   //ハッシュ化した文章を代入
   var hash = bcrypt.hashSync(plaintextPassword, saltRounds);
   client.connect();
-  sql = "INSERT INTO users (username,password) VALUES($1,$2)";
+  const sql = "INSERT INTO users (username,password) VALUES($1,$2)";
   const values = [username, hash];
   client
     .query(sql, values)
