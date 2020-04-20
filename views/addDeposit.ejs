@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <form action="adddeposit" method="POST">
+      <p>
+        <label for="date">入金日</label>
+        <input type="date" name="date" />
+      </p>
+      <p>
+        <label for="content">内容</label>
+        <input type="text" name="content" />
+      </p>
+      <p>
+        <label for="amoutn">金額</label>
+        <input type="number" name="amount" />
+      </p>
+      <p>
+          <input type="reset" value="リセット">
+          <input type="submit" value="登録">
+      </p>
+    </form>
+  </body>
+</html>

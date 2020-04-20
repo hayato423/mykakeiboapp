@@ -1,0 +1,10 @@
+cash 　　購入日、購入者、購入品名、値段
+credit   上と同じ
+subsucription 上と同じ
+creditとsubsucriptionテーブルは支払い日時になったらデータをcashに追加。
+creditテーブルのデータは消去、subscriptionテーブルのデータは削除しない。
+
+deposit  入金日、入金者、内容、金額
+
+所持金　depositの合計　- cashの合計
+実質所持金　depositの合計 - cashの合計 - creditの合計
