@@ -7,7 +7,7 @@ router.get("/", function (req, res) {
     if (req.session.isLogin == false || req.session.isLogin == undefined) {
       res.redirect("..");
     } else
-      res.render("addDeposit", {
+      res.render("addProduct", {
         title: "買ったもの登録",
       });
   });

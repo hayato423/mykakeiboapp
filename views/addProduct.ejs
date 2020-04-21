@@ -1,32 +1,34 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= title %></title>
-</head>
-<body>
+  </head>
+  <body>
     <h1><%= title %></h1>
     <form action="addproduct">
-        <p><label for="date">購入日</label>
-        <input type="date" name="purchase_date">
-    </p>
-    <p>
+      <p>
+        <label for="date">購入日</label>
+        <input type="date" name="purchase_date" />
+      </p>
+      <p>
         <label for="product_name">買ったもの</label>
-        <input type="text" name="product_name">
-    </p>
-    <p>
+        <input type="text" name="product_name" />
+      </p>
+      <p>
         <label for="price">値段</label>
-        <input type="number" name="price">
-    </p>
-    <p>
+        <input type="number" name="price" />
+      </p>
+      <p>
         <label for="method">支払い方法</label>
-        <input type="radio" name="method" value="cash">現金
-        <input type="radio" name="method" value="credit">カード
-    </p>
-    <p>
-        <input type="submit" value="送信">
-    </p>
+        <input type="radio" name="method" value="cash" />現金
+        <input type="radio" name="method" value="credit" />カード
+      </p>
+      <p>
+        <input type="submit" value="送信" />
+        <input type="reset" />
+      </p>
     </form>
-</body>
+  </body>
 </html>
