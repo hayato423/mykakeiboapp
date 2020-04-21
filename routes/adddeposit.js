@@ -1,14 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const { Pool } = require("pg");
+const pool = require('../postgresPool');
 
-const connectionString =
-  process.env.DATABASE_URL ||
-  "postgres://postgres:postgres@localhost:5432/mykakeiboapp";
-
-const pool = new Pool({
-  connectionString: connectionString,
-});
 
 router.get("/", function (req, res) {
   //ログインされていなかったらindexにリダイレクト

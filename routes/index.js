@@ -1,13 +1,6 @@
 var express = require("express");
 var router = express.Router();
-const { Pool } = require("pg");
-
-const connectionString =
-  process.env.DATABASE_URL ||
-  "postgres://postgres:postgres@localhost:5432/mykakeiboapp";
-const pool = new Pool({
-  connectionString: connectionString,
-});
+const pool = require('../postgresPool');
 
 /* GET home page. */
 router.get("/", function (req, res, next) {

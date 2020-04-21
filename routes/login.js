@@ -1,16 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
-const { Pool } = require("pg");
-
-
-const connectionString =
-  process.env.DATABASE_URL ||
-  "postgres://postgres:postgres@localhost:5432/mykakeiboapp";
-  
-const pool = new Pool({
-  connectionString: connectionString,
-});
+const pool = require('../postgresPool');
 
 router.get("/", function (req, res, next) {
   var msg = "ユーザーネームとパスワードを入力してください";
