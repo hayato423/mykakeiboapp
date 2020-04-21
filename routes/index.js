@@ -1,11 +1,11 @@
 var express = require("express");
 var router = express.Router();
-const { Client } = require("pg");
+const { Pool } = require("pg");
 
 const connectionString =
   process.env.DATABASE_URL ||
   "postgres://postgres:postgres@localhost:5432/mykakeiboapp";
-const client = new Client({
+const pool = new Pool({
   connectionString: connectionString,
 });
 
@@ -24,10 +24,8 @@ router.get("/", function (req, res, next) {
 });
 
 async function displayPossesion(username) {
-  client.connect();
   const sql = "SELECT SUM(amount) from deposit WHERE username = $1";
-  const result = await client.query(sql, [username]);
-  client.end();
+  const result = await pool.query(sql, [username]);
   const possesion = result.rows[0]['sum'];
   console.log(possesion);
   return possesion;
