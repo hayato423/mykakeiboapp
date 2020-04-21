@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const { Client } = require("pg");
+const { Pool } = require("pg");
 
 const connectionString =
   process.env.DATABASE_URL ||
   "postgres://postgres:postgres@localhost:5432/mykakeiboapp";
 
-const client = new Client({
+const pool = new Pool({
   connectionString: connectionString,
 });
 
@@ -26,16 +26,15 @@ router.post('/',function(req,res) {
     const content = req.body['content'];
     const amount = req.body['amount'];
     console.log(date + ":" + username +" " + content +" "+ amount );
-    client.connect();
     const sql = "INSERT INTO deposit VALUES( $1, $2, $3, $4);";
     const values = [date,username,content,amount];
-    client.query(sql,values)
+    pool.query(sql,values)
     .then((result) => {
         console.log(result);
         client.end();
     })
     .catch((e) => console.log(e.stack))
-    .then(() => {
+    .finally(() => {
         res.redirect('..');
     });
 })

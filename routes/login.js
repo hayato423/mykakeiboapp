@@ -1,13 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
-const { Client } = require("pg");
+const { Pool } = require("pg");
 
 
 const connectionString =
   process.env.DATABASE_URL ||
   "postgres://postgres:postgres@localhost:5432/mykakeiboapp";
-const client = new Client({
+  
+const pool = new Pool({
   connectionString: connectionString,
 });
 
@@ -39,10 +40,8 @@ router.post("/", function (req, res, next) {
 //dbからユーザーネームを基にパスワードを取得し,引数のパスワードと比較.一致するならtrue,しないならfalseを返す.
 async function comfirmPassword(username, password) {
   try {
-    client.connect();
     const sql = "SELECT password FROM users WHERE username = $1";
-    const result = await client.query(sql, [username]);
-    client.end();
+    const result = await pool.query(sql, [username]);
     let hash = result.rows[0]["password"];
     const isCorrectPassword = await bcrypt.compare(password,hash);
     if(isCorrectPassword) return true;
