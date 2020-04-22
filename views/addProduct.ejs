@@ -7,7 +7,7 @@
   </head>
   <body>
     <h1><%= title %></h1>
-    <form action="addproduct">
+    <form action="addproduct" method="POST">
       <p>
         <label for="date">購入日</label>
         <input type="date" name="purchase_date" />
@@ -22,7 +22,7 @@
       </p>
       <p>
         <label for="method">支払い方法</label>
-        <input type="radio" name="method" value="cash" />現金
+        <input type="radio" name="method" value="cash" checked="checked"/>現金
         <input type="radio" name="method" value="credit" />カード
       </p>
       <p>

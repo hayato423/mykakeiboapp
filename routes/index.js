@@ -18,10 +18,15 @@ router.get("/", function (req, res, next) {
 });
 
 async function displayPossesion(username) {
-  const sql = "SELECT SUM(amount) from deposit WHERE username = $1";
-  const result = await pool.query(sql, [username]);
-  const possesion = result.rows[0]["sum"];
-  console.log(possesion);
+  const sqlToGetAmountofSavings = "SELECT SUM(amount) from deposit WHERE username = $1";
+  let result = await pool.query(sqlToGetAmountofSavings, [username]);
+  const deposit = result.rows[0]["sum"];
+  const sqlTOGetAmountofPaied = "SELECT SUM(price) from paied WHERE username = $1";
+  result = await pool.query(sqlTOGetAmountofPaied,[username]);
+  const paied = result.rows[0]["sum"];
+  console.log("deposit:"+deposit);
+  console.log("paied:"+paied);
+  const possesion = deposit - paied;
   return possesion;
 }
 
