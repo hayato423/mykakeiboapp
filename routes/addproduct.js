@@ -20,7 +20,7 @@ router.get("/", function (req, res) {
       const method = req.body['method'];
       let table_name ='';
       if(method == 'cash') table_name = 'paied';
-      else table_name = 'card';
+      else if(method == 'card') table_name = 'card';
       console.log(purchase_date + ","+ product_name +","+ price +","+ method +","+ table_name );
       try{
         const sql = 'INSERT INTO ' + table_name +  ' VALUES($1,$2,$3,$4)';
