@@ -4,6 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const session = require('express-session');
+const cron = require('node-cron');
+const pool = require('./postgresPool');
 
 const sessionOption = {
   secret : 'idolm@ster',
@@ -63,5 +65,19 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+//debit function
+cron.schedule('* * 0 * *',async () => {
+  let today = new Date();
+  let date = today.getDate();
+  if(date == 27){
+    console.log('cardのレコードをpaiedに移動');
+    const MoveRecordSQL = "insert into paied select * from card where date_part('month',purchase_date) = date_part('month',current_date - interval '1 months');";
+    await pool.query(MoveRecordSQL);
+    const DeleteRecordSQL = "delete  from card where date_part('month',purchase_date) = date_part('month',current_date - interval '1 months');";
+    await pool.query(DeleteRecordSQL);
+  }
+});
+
 
 module.exports = app;
