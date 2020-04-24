@@ -67,7 +67,7 @@ app.use(function(err, req, res, next) {
 });
 
 //debit function
-cron.schedule('* * 0 * *',async () => {
+cron.schedule('0 0 0 * * *',async () => {
   let today = new Date();
   let date = today.getDate();
   if(date == 27){
