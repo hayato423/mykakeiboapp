@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <form action="addsubscription" method="POST">
+      <p>
+        <label for="date">支払い日</label>
+        <input type="date" name="payment_date" />
+      </p>
+      <p>
+        <label for="product_name">サービス名</label>
+        <input type="text" name="product_name" />
+      </p>
+      <p>
+        <label for="price">値段</label>
+        <input type="number" name="price" />
+      </p>
+      <p>
+        <label for="method">支払い方法</label>
+        <input type="radio" name="method" value="cash" />デビット
+        <input type="radio" name="method" value="card" checked="checked"/>クレジット
+      </p>
+      <p>
+        <input type="submit"/>
+        <input type="reset" />
+      </p>
+    </form>
+  </body>
+</html>

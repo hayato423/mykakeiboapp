@@ -27,7 +27,7 @@ var registerRouter = require('./routes/register');
 var loginRouter = require('./routes/login');
 var addDepositRouter = require('./routes/adddeposit');
 var addProductRouter = require('./routes/addproduct');
-
+var addSubscriptionRouter = require('./routes/addsubscription');
 
 var app = express();
 
@@ -49,6 +49,8 @@ app.use('/register',registerRouter);
 app.use('/login',loginRouter);
 app.use('/adddeposit',addDepositRouter);
 app.use('/addproduct',addProductRouter);
+app.use('/addsubscription',addSubscriptionRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
