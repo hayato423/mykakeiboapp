@@ -81,5 +81,17 @@ cron.schedule('0 0 0 * * *',async () => {
   }
 });
 
+//subscriptiohn
+cron.schedule('0 0 0 * * * ',async () => {
+  console.log('execute');
+  let today = new Date();
+  let date = today.getDate();
+  const card_sql = "insert into card select current_date, username, product_name,price from subscription where date_part('day',payment_date) = $1 and method = 'card'";
+  var params = [date];
+  await pool.query(card_sql,params);
+  const debit_sql = "insert into paied select current_date, username, product_name,price from subscription where date_part('day',payment_date) = $1 and method = 'cash'";
+  await pool.query(debit_sql,params);
+})
+
 
 module.exports = app;
