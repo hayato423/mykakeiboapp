@@ -67,7 +67,7 @@ app.use(function (err, req, res, next) {
 });
 
 //debit function
-cron.schedule("0 30 28 * *", async () => {
+cron.schedule("0 0 27 * *", async () => {
   console.log("cardのレコードをpaiedに移動");
   const MoveRecordSQL =
     "insert into paied select * from card where date_part('month',purchase_date) = date_part('month',current_date - interval '1 months');";
@@ -78,7 +78,7 @@ cron.schedule("0 30 28 * *", async () => {
 });
 
 //subscriptiohn
-cron.schedule("30 0 * * * ", async () => {
+cron.schedule("0 0 * * * ", async () => {
   console.log("execute");
   let today = new Date();
   let date = today.getDate();
